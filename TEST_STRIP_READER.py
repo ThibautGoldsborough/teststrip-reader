@@ -80,15 +80,15 @@ def findinterceptcol(col_list,test,obstest):
     
 def findvert(colred,colgreen,colblue,red,green,blue,test,precision):
     differ=[]
-    rnge=[]
-    for l in range(len(test)-1):
-        rnge2=test[l]
-        while rnge2<=test[l+1]:
-            rnge.append(rnge2)
-            rnge2+=(test[l+1]-test[l])/(1/precision)
-    for d in rnge:
-        for q in range(len(colred)):
-            differ.append((abs(red-findinterceptcol(colred,test,d))+abs(green-findinterceptcol(colgreen,test,d))+abs(blue-findinterceptcol(colblue,test,d)),d))
+    x_axis_values=[]
+    for i in range(len(test)-1):
+        x_axis_range=test[i]
+        while x_axis_range<=test[i+1]:
+            x_axis_values.append(x_axis_range)
+            x_axis_range+=(test[i+1]-test[i])*precision
+    for x_axis_value in x_axis_values:
+        for j in range(len(colred)):
+            differ.append((abs(red-findinterceptcol(colred,test,x_axis_value))+abs(green-findinterceptcol(colgreen,test,x_axis_value))+abs(blue-findinterceptcol(colblue,test,x_axis_value)),x_axis_value))
     return(min(differ))
         
 pygame.display.init() 
@@ -114,7 +114,6 @@ for j in range(len(photos_list)):
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                print("aaa")
                 running=False
                 pygame.display.quit()
         
@@ -122,7 +121,6 @@ for j in range(len(photos_list)):
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    print("aaa")
                     running=False
                     pygame.display.quit()
             if (pygame.key.get_pressed()[pygame.K_p]!=0):
@@ -133,7 +131,7 @@ for j in range(len(photos_list)):
                 print("Hardness")
             if (pygame.key.get_pressed()[pygame.K_o]!=0):
                 test=protein
-                print("protein")
+                print("Protein")
                 
             display_surface = pygame.display.set_mode((1400,300)) 
             a=pygame.transform.scale(a2, (1400, 300)) 
